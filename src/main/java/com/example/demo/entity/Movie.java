@@ -33,8 +33,7 @@ public class Movie {
     @Column(name = "rating", nullable = false)
     private Double rating;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Review> reviews = new HashSet<>();
 
 }

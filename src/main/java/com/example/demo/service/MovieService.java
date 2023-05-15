@@ -34,12 +34,7 @@ public class MovieService implements IMovieService{
 
         Movie movieSaved = movieRepository.save(movie);
 
-        System.out.println("MOVIE SAVED : "+movieSaved);
-
         MovieDTO movieDTOResp = mapDTO(movieSaved);
-
-        System.out.println("MOVIE RESPONSE : "+movieDTOResp);
-
 
         return movieDTOResp;
     }
@@ -48,7 +43,11 @@ public class MovieService implements IMovieService{
     public MovieDTO getMovieById(long id) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", id));
-        return mapDTO(movie);
+        System.out.println(movie);
+        System.out.println(movie.getReviews());
+        MovieDTO movieResponse = mapDTO(movie);
+        movieResponse.setReviews(movie.getReviews());
+        return movieResponse;
 
     }
 
