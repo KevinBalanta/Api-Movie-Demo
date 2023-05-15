@@ -32,7 +32,7 @@ public class AuthService {
 
     public RegisterResponseDTO register(RegisterRequestDTO request) {
         var user = UserAPI.builder()
-                .username(request.getUsername())
+                .firstname(request.getFirstname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())

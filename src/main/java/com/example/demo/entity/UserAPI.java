@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "username" }),
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "firstname" }),
         @UniqueConstraint(columnNames = { "email" }) } )
 public class UserAPI implements UserDetails {
 
@@ -26,8 +26,8 @@ public class UserAPI implements UserDetails {
     private long id;
 
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    @Column(name = "firstname", nullable = false)
+    private String firstname;
 
     @Column(name = "email", nullable = false)
     private String email;
