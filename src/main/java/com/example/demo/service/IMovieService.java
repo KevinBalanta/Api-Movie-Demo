@@ -8,6 +8,8 @@ public interface IMovieService {
 
     public MovieDTO saveMovie(MovieDTO movieDTO);
 
+    public MovieDTO updateMovie(MovieDTO movieDTO, long id);
+
     public MovieDTO getMovieById(long id);
 
     public MovieListDTO getAllMovies(int pageNo, int pageSize, String orderBy, String orderDir);

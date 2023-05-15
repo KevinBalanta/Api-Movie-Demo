@@ -35,6 +35,11 @@ public class MovieController {
         return new ResponseEntity<>(movieService.saveMovie(movieDTO), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieDTO> updateMovie(@Valid @RequestBody MovieDTO movieDTO, @PathVariable(name = "id") long id) {
+        return new ResponseEntity<>(movieService.updateMovie(movieDTO, id), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getMovieById(@PathVariable(name = "id") long id) {
         return ResponseEntity.ok(movieService.getMovieById(id));

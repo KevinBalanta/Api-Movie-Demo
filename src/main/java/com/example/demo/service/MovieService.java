@@ -40,13 +40,29 @@ public class MovieService implements IMovieService{
     }
 
     @Override
+    public MovieDTO updateMovie(MovieDTO movieDTO, long id) {
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", id));
+
+        movie.setTitle(movieDTO.getTitle());
+        movie.setGenre(movieDTO.getGenre());
+        movie.setRating(movieDTO.getRating());
+
+        Movie movieSaved = movieRepository.save(movie);
+
+        MovieDTO movieDTOResp = mapDTO(movieSaved);
+
+        return movieDTOResp;
+    }
+
+    @Override
     public MovieDTO getMovieById(long id) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", id));
-        System.out.println(movie);
-        System.out.println(movie.getReviews());
+
         MovieDTO movieResponse = mapDTO(movie);
         movieResponse.setReviews(movie.getReviews());
+        System.out.println("--Movie Reviews :"+movie.getReviews().size());
         return movieResponse;
 
     }
