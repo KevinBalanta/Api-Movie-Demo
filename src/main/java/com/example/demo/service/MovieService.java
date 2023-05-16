@@ -91,6 +91,16 @@ public class MovieService implements IMovieService{
     }
 
     @Override
+    public List<MovieDTO> getAllMoviesByReviewsAmount(int reviewsCount) {
+
+        List<Movie> movieList = movieRepository.findByReviewsAmount(reviewsCount);
+        List<MovieDTO> content = movieList.stream().map(movie -> mapDTO(movie))
+                .collect(Collectors.toList());
+
+        return content;
+    }
+
+    @Override
     public void deleteMovieById(long id) {
         Movie movie = movieRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movie", "id", id));

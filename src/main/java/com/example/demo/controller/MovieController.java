@@ -9,7 +9,10 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/movies")
@@ -29,6 +32,7 @@ public class MovieController {
         return movieService.getAllMovies(pageNo,pageSize, orderBy, sortDir);
 
     }
+
 
     @PostMapping()
     public ResponseEntity<MovieDTO> saveMovie(@Valid @RequestBody MovieDTO movieDTO) {
@@ -50,6 +54,15 @@ public class MovieController {
     public ResponseEntity<String> deleteMovieById(@PathVariable(name = "id") long id){
         movieService.deleteMovieById(id);
         return new ResponseEntity<>("", HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/reviews-count")
+    public List<MovieDTO> getAllMovies(
+            @RequestParam(value = "reviewsCount", defaultValue = "0", required = false) int count
+     ){
+
+        return movieService.getAllMoviesByReviewsAmount(count);
+
     }
 
 

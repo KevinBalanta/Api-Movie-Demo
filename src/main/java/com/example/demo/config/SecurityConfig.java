@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.entity.Role;
 import com.example.demo.security.JWTAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static com.example.demo.entity.Permission.*;
+import static com.example.demo.entity.Role.ADMIN;
+import static com.example.demo.entity.Role.USER;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
@@ -40,6 +46,10 @@ public class SecurityConfig {
                         "/swagger-ui/**",
                         "/webjars/**",
                         "/swagger-ui.html").permitAll()
+                .requestMatchers("/api/v1/movies/**").hasRole(ADMIN.name())
+                .requestMatchers(POST,"/api/v1/movies/**").hasAuthority(ADMIN_CREATE.name())
+                .requestMatchers(PUT,"/api/v1/movies/**").hasAuthority(ADMIN_UPDATE.name())
+                .requestMatchers(DELETE,"/api/v1/movies/**").hasAuthority(ADMIN_DELETE.name())
                 .anyRequest()
                 .authenticated()
                 .and()
